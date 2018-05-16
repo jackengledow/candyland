@@ -18,13 +18,14 @@ public class Player {
         location = 0;
     }
     
-    public void move(ArrayList<String> colors, Card next){
+    public void move(ArrayList<String> colors, Card next, Circle player){
         for(int i = location+1; i<colors.size(); i++){
             if(colors.get(i).equals(next.getAttr())){
                 location = i;
                 break;
             }
         }
+        Circle p = new Circle(player.getX() + 40, player.getY());
     }
     public int getLocation(){
         return this.location;

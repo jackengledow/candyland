@@ -5,20 +5,27 @@
  */
 package candylan;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.swing.JPanel;
 
 /**
  *
  * @author jackengledow
  */
-public class Circle extends Canvas{
+public class Circle  {
     private int r = 10;
-    private int x = 10;
-    private int y = 10;
+    private int x;
+    private int y;
     
-    public Circle(){}
+    public Circle(int x, int y){
+        this.y = y;
+        this.x = x;
+    }
+    public Circle(){
+        this.y = 30;
+        this.x = 40;
+    }
     public int getR(){
         return this.r;
     }
@@ -38,7 +45,7 @@ public class Circle extends Canvas{
         this.y = y;
     }
     
-    public void paint(Graphics g){
+    public void paintComponent(Graphics g){
         g.setColor(Color.BLACK);
         g.fillOval(x, y, r, r);
     }

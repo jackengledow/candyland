@@ -13,14 +13,14 @@ import javax.swing.JPanel;
  *
  * @author jackengledow
  */
-public class Rectangle extends JPanel{
+public class Rectangle {
     private int x = 25;
     private int y = 25;
     private final int d = 40;
     private final Color[] colors = {Color.red, Color.yellow, Color.blue, Color.magenta, Color.orange, Color.green};
 
     
-    public void paint(Graphics g){
+    public void paintComponent(Graphics g){
         int temp = 0;
         for(int i = x, j = 0; i<1000; i+=40, j+=1){
             Color c = colors[j%6];

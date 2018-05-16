@@ -14,11 +14,17 @@ import java.util.ArrayList;
  */
 public class Board {
     private ArrayList<String> spaces  = new ArrayList<String>();
+    ArrayList<String> colors = new ArrayList<String>();
     
     public Board(String[] colors){
         for(int i = 0; i<21; i++){
             for(String c: colors){
                 spaces.add(c);
+                if(i == 0){
+                    for(String d: colors){
+                        this.colors.add(d);
+                    }
+                }
             }
         }
     }
