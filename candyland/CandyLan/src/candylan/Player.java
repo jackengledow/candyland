@@ -13,21 +13,25 @@ import java.util.ArrayList;
  */
 public class Player {
     private int location;
+    private int last;
     
     public Player(){
         location = 0;
     }
     
-    public void move(ArrayList<String> colors, Card next, Circle player){
+    public void move(ArrayList<String> colors, Card next){
         for(int i = location+1; i<colors.size(); i++){
             if(colors.get(i).equals(next.getAttr())){
+                last = location;
                 location = i;
                 break;
             }
         }
-        Circle p = new Circle(player.getX() + 40, player.getY());
     }
     public int getLocation(){
         return this.location;
+    }
+    public int getLast(){
+        return this.last;
     }
 }

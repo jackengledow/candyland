@@ -49,4 +49,22 @@ public class Circle  {
         g.setColor(Color.BLACK);
         g.fillOval(x, y, r, r);
     }
+    
+    public void moveRight(){
+        if(x<1000){
+            this.setX(x + 40);
+        } else {
+            this.setX(1000);
+        }
+    }
+    public void moveleft(){
+        if(x<=1000 && x > 0){
+            this.setX(x - 40);
+        } else {
+            this.setX(0);
+        }
+    }
+    public void moveY(){
+        this.setY(y + 40);
+    }
 }

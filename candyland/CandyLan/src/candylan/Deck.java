@@ -39,6 +39,7 @@ public class Deck {
             current = 0;
             this.shuffle();
         }
+        current++;
         return deck.get(current);
     }
     public int getCurrent(){
