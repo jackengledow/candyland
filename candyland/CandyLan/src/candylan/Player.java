@@ -28,9 +28,11 @@ public class Player {
             }
         }
     }
+    
     public int getLocation(){
         return this.location;
     }
+    
     public int getLast(){
         return this.last;
     }

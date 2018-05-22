@@ -41,7 +41,6 @@ public class CandyLan extends JPanel implements MouseListener {
 
     public CandyLan(String candyLAN) {
         JFrame frame = new JFrame("CandyLAN");
-        JPanel panel = new JPanel();
         frame.setSize(1200, 800);
         rects = new ArrayList<Rectangle>();
 
@@ -52,19 +51,17 @@ public class CandyLan extends JPanel implements MouseListener {
         c = new Circle();
         
         Player p1 = new Player();
-        System.out.println(p1.getLocation());
-        Button move = new Button("Move");
+        Button move = new Button("Draw Card");
         move.setBounds(985, 611, 200, 150);
         move.addMouseListener(this);
-        frame.add(panel);
         frame.add(move);
         frame.add(this);
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paintComponent(g);
         r.paintComponent(g);
@@ -77,18 +74,6 @@ public class CandyLan extends JPanel implements MouseListener {
         System.out.println("color: " + d.getDeck().get(d.getCurrent()).getAttr());
         System.out.println("current: " + d.getCurrent());
         System.out.println("location: " + p1.getLocation());
-        for(int i = 0; i<p1.getLocation()-p1.getLast(); i++){
-            if(p1.getLocation()>25 && p1.getLocation() < 28){
-                c.setX(1000);
-                c.moveY();
-            } else if(p1.getLocation()>27 && p1.getLocation() < 52){
-                c.moveleft();
-            } 
-            else {
-                c.moveRight();
-            }
-        }
-        repaint();
     }
 
     @Override
