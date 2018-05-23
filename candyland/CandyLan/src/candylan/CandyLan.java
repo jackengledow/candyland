@@ -29,9 +29,11 @@ public class CandyLan extends JPanel implements MouseListener {
     static Deck d;
     static Board b;
     Rectangle r;
-    Circle c;
+    Circle c1;
+    Circle c2;
     Player p1 = new Player();
     Player p2 = new Player();
+    private int turn = 1;
 
     /**
      * @param args the command line arguments
@@ -51,9 +53,9 @@ public class CandyLan extends JPanel implements MouseListener {
         b = new Board(colors);
 
         r = new Rectangle();
-        c = new Circle();
+        c1 = new Circle();
+        c2 = new Circle(40, 50, Color.white);
         
-        Player p1 = new Player();
         Button move = new Button("Draw Card");
         move.setBounds(985, 611, 200, 150);
         move.addMouseListener(this);
@@ -68,25 +70,33 @@ public class CandyLan extends JPanel implements MouseListener {
     public void paint(Graphics g) {
         super.paintComponent(g);
         r.paintComponent(g);
-        c.paintComponent(g);
+        c1.paintComponent(g);
+        c2.paintComponent(g);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        p1.move(b.getSpaces(), d.draw());
-        /*System.out.println("color: " + d.getDeck().get(d.getCurrent()).getAttr());
-        System.out.println("current: " + d.getCurrent());
-        System.out.println("location: " + p1.getLocation());*/
-        int location = p1.getLocation();
-        Point current = r.getPoints().get(location);
-        c.setX(current.getX()+15);
-        c.setY(current.getY()+5);
-        try {
-            TimeUnit.SECONDS.sleep(3);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(CandyLan.class.getName()).log(Level.SEVERE, null, ex);
+        if(turn%2 == 1){
+            p1.move(b.getSpaces(), d.draw());
+            int location1 = p1.getLocation();
+            Point current1 = r.getPoints().get(location1);
+            c1.setX(current1.getX()+15);
+            c1.setY(current1.getY()+5);
+            repaint();
+        } else {
+            p2.move(b.getSpaces(), d.draw());
+            int location2 = p2.getLocation();
+            Point current2 = r.getPoints().get(location2);
+            c2.setX(current2.getX()+15);
+            c2.setY(current2.getY()+25);
+            repaint();
         }
-        repaint();
+        if(p1.getLocation() == r.getPoints().size() - 1){
+            System.out.println("Player 1 wins!!!");
+        } else if(p2.getLocation() == r.getPoints().size() - 1){
+            System.out.println("Player 2 wins!!");
+        }
+        turn++;
     }
 
     @Override

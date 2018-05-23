@@ -17,14 +17,17 @@ public class Circle  {
     private int r = 10;
     private int x;
     private int y;
+    private Color color;
     
-    public Circle(int x, int y){
+    public Circle(int x, int y, Color c){
         this.y = y;
         this.x = x;
+        this.color = c;
     }
     public Circle(){
         this.y = 30;
         this.x = 40;
+        this.color = Color.black;
     }
     public int getR(){
         return this.r;
@@ -46,7 +49,7 @@ public class Circle  {
     }
     
     public void paintComponent(Graphics g){
-        g.setColor(Color.BLACK);
+        g.setColor(color);
         g.fillOval(x, y, r, r);
     }
     
