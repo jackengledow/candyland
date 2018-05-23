@@ -74,6 +74,11 @@ public class CandyLan extends JPanel implements MouseListener {
         System.out.println("color: " + d.getDeck().get(d.getCurrent()).getAttr());
         System.out.println("current: " + d.getCurrent());
         System.out.println("location: " + p1.getLocation());
+        int location = p1.getLocation();
+        Point current = r.getPoints().get(location);
+        c.setX(current.getX()+15);
+        c.setY(current.getY()+5);
+        repaint();
     }
 
     @Override
