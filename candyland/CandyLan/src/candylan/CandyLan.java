@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -78,6 +81,11 @@ public class CandyLan extends JPanel implements MouseListener {
         Point current = r.getPoints().get(location);
         c.setX(current.getX()+15);
         c.setY(current.getY()+5);
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(CandyLan.class.getName()).log(Level.SEVERE, null, ex);
+        }
         repaint();
     }
 
