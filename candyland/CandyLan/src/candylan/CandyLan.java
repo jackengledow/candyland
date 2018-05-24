@@ -38,6 +38,8 @@ public class CandyLan extends JPanel implements MouseListener {
     private int turn = 1; //tells us who's turn it is (increments everytime you move
     static Circle indicator1 = new Circle(215, 617, Color.black, 25); //shows which circle represents which player (indicates)
     static Circle indicator2 = new Circle(215, 692, Color.white, 25); //instantiates location, color, and size of circle
+    Arrow arr;
+    Card card = new Card("white");
 
     /**
      * @param args the command line arguments
@@ -58,6 +60,11 @@ public class CandyLan extends JPanel implements MouseListener {
         r = new Rectangle(); //creates the board
         c1 = new Circle(); //creates the players pieces on the board
         c2 = new Circle(40, 50, Color.white);
+        
+        int[] arrowsx = {250, 325, 325};
+        int[] arrowsy = {630, 605, 655};
+       
+        arr = new Arrow(arrowsx, arrowsy);
         
         
         Font font = new Font("SansSerif", Font.PLAIN, 40); //makes the font that is used on the button and indicator fields
@@ -92,21 +99,29 @@ public class CandyLan extends JPanel implements MouseListener {
     @Override
     public void paint(Graphics g) {
         super.paintComponent(g);
+        arr.paintComponent(g);
         r.paintComponent(g); //paints the board
         c1.paintComponent(g); //paints the pieces
         c2.paintComponent(g);
+        
+        g.setColor(Color.white);
+        g.fillRect(758,605,185,205);
+        card.paintComponent(g);
+
         indicator1.paintComponent(g); //paints the indicators
         indicator2.paintComponent(g);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        card = d.draw();
         if(turn%2 == 1){ //if turn is odd, player one's turn
             p1.move(b.getSpaces(), d.draw()); //move the player to the next spot that is the same color as the card
             int location1 = p1.getLocation(); //gets index of where player is on the board
             Point current1 = r.getPoints().get(location1); //gets coordinates of space that the player is moving to
             c1.setX(current1.getX()+15); // moves the player to that location
             c1.setY(current1.getY()+5);
+            arr.changeDown();
             repaint(); //repaints the board with new coordinates
         } else { //if turn is even, do the same thing for player 2
             p2.move(b.getSpaces(), d.draw());
@@ -114,11 +129,12 @@ public class CandyLan extends JPanel implements MouseListener {
             Point current2 = r.getPoints().get(location2);
             c2.setX(current2.getX()+15);
             c2.setY(current2.getY()+25);
+            arr.changeUp();
             repaint();
         }
-        /*if(p1.getLocation() == r.getPoints().size() - 1){
+        if(p1.getLocation() == r.getPoints().size() - 1){
             JOptionPane.showMessageDialog(null, "Player 1 Wins!!!!!"); //if player1 is on the last spot, they win
-        } else */if(p2.getLocation() == r.getPoints().size() - 1){
+        } else if(p2.getLocation() == r.getPoints().size() - 1){
             JOptionPane.showMessageDialog(null, "Player 2 Wins!!!!!"); //if player2 is on the last spot, the win
         }
         turn++;
