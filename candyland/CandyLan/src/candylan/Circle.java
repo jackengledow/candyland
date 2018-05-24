@@ -24,6 +24,12 @@ public class Circle  {
         this.x = x;
         this.color = c;
     }
+    public Circle(int x, int y, Color c, int r){
+        this.y = y;
+        this.x = x;
+        this.color = c;
+        this.r = r;
+    }
     public Circle(){
         this.y = 30;
         this.x = 40;

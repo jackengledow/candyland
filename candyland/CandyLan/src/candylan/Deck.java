@@ -35,7 +35,7 @@ public class Deck {
         Collections.shuffle(deck);
     }
     public Card draw(){
-        if(current == 60){
+        if(current == 59){
             current = 0;
             this.shuffle();
         }
