@@ -14,17 +14,17 @@ import java.awt.Graphics;
  * @author Owner
  */
 public class Card {
-    private String attr;
+    private String attr; //color that the card is
     
     public Card(String attr){
-        this.attr = attr;
+        this.attr = attr; //sets the color based on an input
     }
     
     public String getAttr(){
-        return this.attr;
+        return this.attr; //returns the color of the card
     }
     
-    public void paintComponent(Graphics c){
+    public void paintComponent(Graphics c){ //paints the color of the card by checking its attribute
         switch(this.attr) {
             case "red": c.setColor(Color.red);
             break;

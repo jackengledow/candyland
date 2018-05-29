@@ -7,17 +7,6 @@ package candylan;
 
 import java.awt.*;
 import java.awt.event.*;
-/*import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;*/
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-/*import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;*/
 import javax.swing.*;
 
 /**
@@ -27,41 +16,43 @@ import javax.swing.*;
 public class CandyLan extends JPanel implements MouseListener {
 
     String[] colors = {"red", "yellow", "blue", "purple", "orange", "green"}; // colors used to create the board and keep track of players locations
-    String[] chara = {"Frostine", "Lolly", "Nutt", "Jolly", "Plumpy", "Mint"};// same thing as above but with characters
-    static Deck d; //array list of cards used to move player along the board (cards hold value of either character or color
-    Board b; //board is array list of strings that is the same as displayed to keep track of player location
-    Rectangle r; //graphical representation of the board (includes all spaces)
-    Circle c1; //graphical representation of where the players are
+    static Deck d;
+    Board b;
+    Rectangle r;
+    Circle c1;
     Circle c2;
-    Player p1 = new Player(); //allows us to keep track of where the player is on the board
+    Player p1 = new Player();
     Player p2 = new Player();
-    private int turn = 1; //tells us who's turn it is (increments everytime you move
-    static Circle indicator1 = new Circle(215, 617, Color.black, 25); //shows which circle represents which player (indicates)
-    static Circle indicator2 = new Circle(215, 692, Color.white, 25); //instantiates location, color, and size of circle
-    Arrow arr;
-    Card card = new Card("white");
+    private int turn = 1; //tells us who's turn it is (increments everytime you move)
+    static Circle indicator1 = new Circle(25, 617, Color.black, 25); //shows which circle represents which player (indicates)
+    static Circle indicator2 = new Circle(25, 692, Color.white, 25); //instantiates location, color, and size of circle
+    Arrow arr; //indicator showing which player's turn it is
+    Card card = new Card("black"); //creates an object that allows us to paint the current card to the screen
 
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String[] args) {
 
         CandyLan frame = new CandyLan("CandyLAN"); //starts a new game
         d.shuffle(); //shuffles the deck
+        
+        JOptionPane.showMessageDialog(null, "Player 1 is the black circle!" + "\n" + "Player 2 is the white circle!"); //tells which player is which circle
     }
 
     public CandyLan(String candyLAN) {
         JFrame frame = new JFrame("CandyLAN"); //frame to add graphical components
         frame.setSize(1200, 800); //sets size of the window
 
-        d = new Deck(colors, chara); //creates a new deck with the colors and characters declared before
+        d = new Deck(colors); //creates a new deck with the colors and characters declared before
         b = new Board(colors); //creates a new board with the colors
 
         r = new Rectangle(); //creates the board
         c1 = new Circle(); //creates the players pieces on the board
         c2 = new Circle(40, 50, Color.white);
         
-        int[] arrowsx = {250, 325, 325};
+        int[] arrowsx = {60, 135, 135};
         int[] arrowsy = {630, 605, 655};
        
         arr = new Arrow(arrowsx, arrowsy);
@@ -73,33 +64,21 @@ public class CandyLan extends JPanel implements MouseListener {
         move.setFont(font); //sets the buttons font to the one created above
         move.setBounds(985, 611, 200, 150); //tells where and how large the button is
         move.addMouseListener(this); //adds a mouse listener to the button so that we can do something when it is clicked
-       
-        JTextField field1 = new JTextField("Player 1:"); //creates the first textbox to tell the players which circle is which player
-        field1.setBorder(null); //takes away the border
-        field1.setEditable(false); //the user can not edit the text
-        field1.setBounds(50, 600, 155, 50); //tells where and how large the textbox is
-        field1.setFont(font); //sets the font to the one created above
         
-        JTextField field2 = new JTextField("Player 2:"); //creates second textbox
-        field2.setBorder(null);
-        field2.setEditable(false);
-        field2.setBounds(50, 675, 155, 50);
-        field2.setFont(font);
-        
-        //adds the textboxes, button, and itself to the frame
-        frame.add(field1);
-        frame.add(field2);
+        //adds the button and itself to the frame
         frame.add(move);
         frame.add(this);
         
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //when you hit the x it closes the program
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //when you hit the x it closes the window
         frame.setVisible(true); //makes it visible
     }
 
     @Override
+    
+    //displays all of the components on the screen
     public void paint(Graphics g) {
         super.paintComponent(g);
-        arr.paintComponent(g);
+        arr.paintComponent(g); //paints the arrow that shows whos turn it is
         r.paintComponent(g); //paints the board
         c1.paintComponent(g); //paints the pieces
         c2.paintComponent(g);
@@ -108,20 +87,21 @@ public class CandyLan extends JPanel implements MouseListener {
         g.fillRect(758,605,185,205);
         card.paintComponent(g);
 
-        indicator1.paintComponent(g); //paints the indicators
+        indicator1.paintComponent(g); //paints the circles that tell the players which circle is which player
         indicator2.paintComponent(g);
     }
 
+    //detects a mouse click and moves the on of the players, depending on whos turn it is
     @Override
     public void mouseClicked(MouseEvent e) {
-        card = d.draw();
         if(turn%2 == 1){ //if turn is odd, player one's turn
             p1.move(b.getSpaces(), d.draw()); //move the player to the next spot that is the same color as the card
             int location1 = p1.getLocation(); //gets index of where player is on the board
             Point current1 = r.getPoints().get(location1); //gets coordinates of space that the player is moving to
-            c1.setX(current1.getX()+15); // moves the player to that location
+            c1.setX(current1.getX()+15); //moves the player to that location
             c1.setY(current1.getY()+5);
-            arr.changeDown();
+            arr.changeDown(); //indicator arrow changes position
+            card = d.getDeck().get(d.getCurrent()); //changes the card that's on screen to the one that was just drawn
             repaint(); //repaints the board with new coordinates
         } else { //if turn is even, do the same thing for player 2
             p2.move(b.getSpaces(), d.draw());
@@ -130,16 +110,28 @@ public class CandyLan extends JPanel implements MouseListener {
             c2.setX(current2.getX()+15);
             c2.setY(current2.getY()+25);
             arr.changeUp();
+            card = d.getDeck().get(d.getCurrent());
             repaint();
         }
         if(p1.getLocation() == r.getPoints().size() - 1){
-            JOptionPane.showMessageDialog(null, "Player 1 Wins!!!!!"); //if player1 is on the last spot, they win
+            int x = JOptionPane.showConfirmDialog(null, "Would you like to play again?", "Player 1 Wins!!!", JOptionPane.YES_NO_OPTION);//if player1 is on the last spot, they win
+            message(x);
         } else if(p2.getLocation() == r.getPoints().size() - 1){
-            JOptionPane.showMessageDialog(null, "Player 2 Wins!!!!!"); //if player2 is on the last spot, the win
+            int t = JOptionPane.showConfirmDialog(null, "Would you like to play again?", "Player 2 Wins!!!", JOptionPane.YES_NO_OPTION);
+            message(t);
         }
-        turn++;
+        turn++; //changes whose turn it is (if it's odd, player 1's turn
     }
-
+    
+    //handles message box interactions
+    public void message(int x){
+        if(x == JOptionPane.YES_OPTION){ //checks if they want to play again
+            CandyLan h = new CandyLan("CandyLAN"); //starts a new game
+            h.d.shuffle(); //shuffles the deck for the new game
+        } else {
+            System.exit(0); //exits the program when the players are done playing
+        }
+    }
     @Override
     public void mousePressed(MouseEvent e) {
     }

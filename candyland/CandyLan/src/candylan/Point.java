@@ -10,18 +10,18 @@ package candylan;
  * @author jackengledow
  */
 public class Point {
-    private int x, y;
+    private int x, y; //declares x, y coordinates
     
-    public Point(int x, int y){
+    public Point(int x, int y){ //sets the x, y coordinates
         this.x = x;
         this.y = y;
     }
     
-    public int getX(){
+    public int getX(){ //returns the x coordinate
         return this.x;
     }
     
-    public int getY(){
+    public int getY(){ //returns y coordinate
         return this.y;
     }
 }
